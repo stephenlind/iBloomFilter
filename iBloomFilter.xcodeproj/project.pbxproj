@@ -8,10 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		9BD06C2721CEDFF600DCD617 /* iBloomFilter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9BD06C1D21CEDFF600DCD617 /* iBloomFilter.framework */; };
-		9BD06C2C21CEDFF600DCD617 /* iBloomFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C2B21CEDFF600DCD617 /* iBloomFilterTests.swift */; };
 		9BD06C2E21CEDFF600DCD617 /* iBloomFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = 9BD06C2021CEDFF600DCD617 /* iBloomFilter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		9BD06C3821CEE0A100DCD617 /* BloomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C3721CEE0A100DCD617 /* BloomFilter.swift */; };
 		9BD06C3A21CEEBE700DCD617 /* BloomFilterDefault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C3921CEEBE700DCD617 /* BloomFilterDefault.swift */; };
+		9BD06C3C21CEEF3200DCD617 /* BloomFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C3B21CEEF3200DCD617 /* BloomFilterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,10 +29,10 @@
 		9BD06C2021CEDFF600DCD617 /* iBloomFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = iBloomFilter.h; sourceTree = "<group>"; };
 		9BD06C2121CEDFF600DCD617 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BD06C2621CEDFF600DCD617 /* iBloomFilterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iBloomFilterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		9BD06C2B21CEDFF600DCD617 /* iBloomFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iBloomFilterTests.swift; sourceTree = "<group>"; };
 		9BD06C2D21CEDFF600DCD617 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9BD06C3721CEE0A100DCD617 /* BloomFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilter.swift; sourceTree = "<group>"; };
 		9BD06C3921CEEBE700DCD617 /* BloomFilterDefault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilterDefault.swift; sourceTree = "<group>"; };
+		9BD06C3B21CEEF3200DCD617 /* BloomFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,7 @@
 		9BD06C2A21CEDFF600DCD617 /* iBloomFilterTests */ = {
 			isa = PBXGroup;
 			children = (
-				9BD06C2B21CEDFF600DCD617 /* iBloomFilterTests.swift */,
+				9BD06C3B21CEEF3200DCD617 /* BloomFilterTests.swift */,
 				9BD06C2D21CEDFF600DCD617 /* Info.plist */,
 			);
 			path = iBloomFilterTests;
@@ -210,7 +210,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BD06C2C21CEDFF600DCD617 /* iBloomFilterTests.swift in Sources */,
+				9BD06C3C21CEEF3200DCD617 /* BloomFilterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

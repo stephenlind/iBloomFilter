@@ -1,26 +1,26 @@
 import Foundation
 
-class BloomFilterDefault {
+public class BloomFilterDefault {
 
     // MARK: BloomFilter Protocol
 
-    var filterData: Data
+    public var filterData: Data
 
-    convenience init(size: Int) {
-        let zeroBytes = calloc(0, size)!
-        let data = Data(bytes: zeroBytes, count: size)
+    public convenience init(size: Int) {
+        let bytes = [UInt8](repeating: 0, count: size)
+        let data = Data(bytes)
         self.init(data: data)
     }
 
-    init(data: Data) {
+    public init(data: Data) {
         self.filterData = data
     }
 
-    func possibleMatch(data: Data) -> Bool {
+    public func possibleMatch(data: Data) -> Bool {
         return false
     }
 
-    func computeChecksum(data: Data) -> Int64 {
+    public func computeChecksum(data: Data) -> Int64 {
         return 0
     }
 }
