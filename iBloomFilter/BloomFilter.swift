@@ -23,10 +23,16 @@ protocol BloomFilter {
     /**
      Check the filter for a piece of data to see if it is a possible match.
      - Parameter data: Data (key) to check
-     - Returns: Yes if the data is a possible match.
+     - Returns: Yes if the data is possibly a match.
         No if it is *definitely* not a match.
      */
-    func possibleMatch(data: Data) -> Bool
+    func checkMatch(data: Data) -> Bool
+
+    /**
+     Add an item as a positive match
+     - parameter data: Data to checksum and add to the filter
+     */
+    func addMatch(data: Data)
 
     /**
      Get or set the raw filter data.

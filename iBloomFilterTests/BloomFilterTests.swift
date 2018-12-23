@@ -18,6 +18,16 @@ class BloomFilterTests: XCTestCase {
             let byteInt = Array(byte).first
             XCTAssertEqual(byteInt, 0)
         }
+    }
 
+    func testPositiveMatches() {
+        let size = 1024 * 1024 // 1 MB
+        let filter = BloomFilterDefault(size: size)
+        let count = 100
+        for _ in 0..<count {
+        let match = UUID().uuidString.data(using: .utf8)!
+            filter.addMatch(data: match)
+            XCTAssertTrue(filter.possibleMatch(data: match))
+        }
     }
 }
