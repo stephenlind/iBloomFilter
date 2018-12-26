@@ -1,31 +1,48 @@
 import Foundation
 import zlib
 
-public class BloomFilterDefault {
+public class BloomFilterDefault : BloomFilter {
 
-    // MARK: BloomFilter Protocol
+    // MARK: Public
 
-    public var filterData: Data
-
-    public var count: Int = 0
-
-    public init(size: Int) {
+    /**
+     Create a new empty filter with a given size (in bytes)
+     - parameter size: fixed size of the filter, in bytes.
+     */
+    public required init(size: Int, capacity: Int) {
         let bytes = [UInt8](repeating: 0, count: size)
         let data = Data(bytes)
+        self.hashCount = BloomFilterDefault.computeHashCount(byteSize: size,
+                                                             elementCount: capacity)
         self.filterData = data
     }
 
-    public func possibleMatch(data: Data) -> Bool {
+    public func check(data: Data) -> Bool {
         let checksum = self.computeChecksum(data: data)
         return self.checkBitAtIndex(bitIndex: checksum, set: false)
     }
 
-    public func addMatch(data: Data) {
+    public func add(data: Data) {
         let checksum = self.computeChecksum(data: data)
         _ = self.checkBitAtIndex(bitIndex: checksum, set: true)
-        self.count += 1
+        self.elementCount += 1
     }
 
+    /**
+     Count of the elements added to the filter
+     */
+    var elementCount: Int = 0
+
+    /**
+     Count of the elements added to the filter
+     */
+    let hashCount: Int
+
+    /**
+     Compute a checksum for a given piece of data
+     - Parameter data: Data to checksum
+     - Returns: Checksum as an integer. If this integer is larger than your bloom filter size, the modulus will be taken for its checksum.
+     */
     public func computeChecksum(data: Data) -> UInt64 {
         // Simple implemetation of crc32, this effectively limits
         // the size to ~536 MB
@@ -34,6 +51,8 @@ public class BloomFilterDefault {
         let crc = crc32(0, ptr, uint(nsdata.length))
         return UInt64(crc) % self.maxByteIndex()
     }
+
+    var filterData: Data
 
     fileprivate func checkBitAtIndex(bitIndex: UInt64, set: Bool) -> Bool {
         // convert bits to bytes
@@ -73,6 +92,17 @@ public class BloomFilterDefault {
         let modIndex = UInt64(bitIndex) % self.maxBitIndex()
         let byteIndex = modIndex / 8
         return Int(byteIndex)
+    }
+
+    static fileprivate func computeHashCount(byteSize: Int, elementCount: Int) -> Int {
+        let minHashCount = 1
+        let maxHashCount = 8
+
+        let bitFieldSize = byteSize * 8
+        var hashCount = Int((Double(bitFieldSize) / Double(elementCount)) * log(2.0))
+        hashCount = max(hashCount, minHashCount)
+        hashCount = min(hashCount, maxHashCount)
+        return hashCount
     }
 }
 

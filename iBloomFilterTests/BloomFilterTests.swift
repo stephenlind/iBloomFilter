@@ -1,5 +1,5 @@
 import XCTest
-import iBloomFilter
+@testable import iBloomFilter
 
 class BloomFilterTests: XCTestCase {
 
@@ -9,7 +9,7 @@ class BloomFilterTests: XCTestCase {
      */
     func testBloomFilterInitialization() {
         let size = 1024
-        let filter = BloomFilterDefault(size: size)
+        let filter = BloomFilterDefault(size: size, capacity: 100)
 
         let data = filter.filterData
         for i in 0..<size - 1 {
@@ -24,14 +24,14 @@ class BloomFilterTests: XCTestCase {
      Verify that a large number of positive matches all are labeled as 'maybe'
      */
     func testPositiveMatches() {
-        let size = 1024 * 1024 // 1 MB
-        let filter = BloomFilterDefault(size: size)
+        let size = 1024 * 1024
         let count = 10000
+        let filter = BloomFilterDefault(size: size, capacity: count)
         var missed = 0
         for _ in 0..<count {
             let match = UUID().uuidString.data(using: .utf8)!
-            filter.addMatch(data: match)
-            let possibleMatch = filter.possibleMatch(data: match)
+            filter.add(data: match)
+            let possibleMatch = filter.check(data: match)
             XCTAssertTrue(possibleMatch)
             if !possibleMatch {
                 missed += 1
@@ -45,15 +45,15 @@ class BloomFilterTests: XCTestCase {
      */
     func testFalsePositiveRate() {
         let size = 1024 * 1024 // 1 MB
-        let filter = BloomFilterDefault(size: size)
         let count = 10000
+        let filter = BloomFilterDefault(size: size, capacity: count)
         var falsePositives = 0
         for _ in 0..<count {
             let match = UUID().uuidString.data(using: .utf8)!
-            filter.addMatch(data: match)
+            filter.add(data: match)
 
             let nonMatch = UUID().uuidString.data(using: .utf8)!
-            let falsePositive = filter.possibleMatch(data: nonMatch)
+            let falsePositive = filter.check(data: nonMatch)
             if falsePositive {
                 falsePositives += 1
             }
