@@ -7,13 +7,11 @@ public class BloomFilterDefault {
 
     public var filterData: Data
 
-    public convenience init(size: Int) {
+    public var count: Int = 0
+
+    public init(size: Int) {
         let bytes = [UInt8](repeating: 0, count: size)
         let data = Data(bytes)
-        self.init(data: data)
-    }
-
-    public init(data: Data) {
         self.filterData = data
     }
 
@@ -25,6 +23,7 @@ public class BloomFilterDefault {
     public func addMatch(data: Data) {
         let checksum = self.computeChecksum(data: data)
         _ = self.checkBitAtIndex(bitIndex: checksum, set: true)
+        self.count += 1
     }
 
     public func computeChecksum(data: Data) -> UInt64 {
@@ -38,19 +37,18 @@ public class BloomFilterDefault {
 
     fileprivate func checkBitAtIndex(bitIndex: UInt64, set: Bool) -> Bool {
         // convert bits to bytes
-        let byteIndex = Int((bitIndex / 8) % self.maxByteIndex())
-        let range = Range(byteIndex..<(byteIndex + 1))
-        let byte = Array(self.filterData.subdata(in: range)).first!
+        let byteIndex = self.byteIndexWithBit(bitIndex: Int(bitIndex))
+        let range = Range(byteIndex...byteIndex)
+        let originalByte = Array(self.filterData.subdata(in: range)).first!
 
-        let addBitIndex = Int(bitIndex % 8)
-        let addBitValue = self.byteWithBitIndex(bitIndex: addBitIndex)
-        let modBitValue = UInt8(addBitIndex < 7 ? addBitIndex + 1 : 0)
-
-        let byteStripHigherFlags = UInt8(byte % modBitValue)
-        let hasFlag: Bool = (byteStripHigherFlags / addBitValue) > 0
+        let intraByteIndex = Int(bitIndex % 8)
+        let flagValue = self.byteValueforFlagIndex(flagIndex: intraByteIndex)
+        let stripFlagValue = self.byteValueforFlagIndex(flagIndex: intraByteIndex + 1)
+        let byteStripHigherFlags = Int(originalByte) % stripFlagValue
+        let hasFlag: Bool = (byteStripHigherFlags / flagValue) > 0
 
         if set && !hasFlag  {
-            let newByte = byte + addBitValue
+            let newByte = originalByte + UInt8(flagValue)
             let newData = Data([newByte])
             self.filterData.replaceSubrange(range, with: newData)
         }
@@ -62,8 +60,19 @@ public class BloomFilterDefault {
         return UInt64(self.filterData.count)
     }
 
-    fileprivate func byteWithBitIndex(bitIndex: Int) -> UInt8 {
-        return UInt8(pow(Double(2), Double(bitIndex)))
+    fileprivate func maxBitIndex() -> UInt64 {
+        return self.maxByteIndex() * 8
+    }
+
+    fileprivate func byteValueforFlagIndex(flagIndex: Int) -> Int {
+        let value = pow(Double(2), Double(flagIndex))
+        return Int(value)
+    }
+
+    fileprivate func byteIndexWithBit(bitIndex: Int) -> Int {
+        let modIndex = UInt64(bitIndex) % self.maxBitIndex()
+        let byteIndex = modIndex / 8
+        return Int(byteIndex)
     }
 }
 
