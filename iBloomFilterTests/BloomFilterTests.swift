@@ -9,7 +9,7 @@ class BloomFilterTests: XCTestCase {
      */
     func testBloomFilterInitialization() {
         let size = 1024
-        let filter = BloomFilterDefault(size: size, capacity: 100)
+        let filter = BloomFilter(size: size, capacity: 100)
 
         let data = filter.filterData
         for i in 0..<size - 1 {
@@ -26,7 +26,7 @@ class BloomFilterTests: XCTestCase {
     func testPositiveMatches() {
         let size = 1024 * 1024
         let count = 10000
-        let filter = BloomFilterDefault(size: size, capacity: count)
+        let filter = BloomFilter(size: size, capacity: count)
         var missed = 0
         for _ in 0..<count {
             let match = UUID().uuidString.data(using: .utf8)!
@@ -46,7 +46,7 @@ class BloomFilterTests: XCTestCase {
     func testFalsePositiveRate() {
         let size = 1024 * 1024 // 1 MB
         let count = 10000
-        let filter = BloomFilterDefault(size: size, capacity: count)
+        let filter = BloomFilter(size: size, capacity: count)
         var falsePositives = 0
         for _ in 0..<count {
             let match = UUID().uuidString.data(using: .utf8)!
@@ -59,17 +59,9 @@ class BloomFilterTests: XCTestCase {
             }
         }
         XCTAssertTrue(falsePositives > 0)
-        let falsePositiveRate = computeFalsePositiveRate(elementCount: count,
-                                                         filterByteSize: size)
+        let falsePositiveRate = BloomFilter.computeFalsePositiveRate(byteSize: size,
+                                                                     elementCount: count)
         let expFalsePositives = falsePositiveRate * Double(count) * 10.0
         XCTAssertTrue(Double(falsePositives) < expFalsePositives)
-    }
-
-    fileprivate func computeFalsePositiveRate(elementCount: Int, filterByteSize: Int) -> Double {
-        // Assuming optimal hash function count,
-        // the false positive rate should be 1 - (1 - 1 / m)^n,
-        // where m is the size of the bitfield and n is the number of elements
-        let singleElementFalsePositive = 1 - 1 / Double(filterByteSize * 8)
-        return 1 - pow(singleElementFalsePositive, Double(elementCount))
     }
 }
