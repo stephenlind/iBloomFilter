@@ -12,7 +12,7 @@ extension BloomFilter {
      */
     static func computeHashCount(byteSize: Int, elementCount: Int) -> Int {
         let minHashCount = 1
-        let maxHashCount = 8
+        let maxHashCount = Int.max
 
         let bitFieldSize = byteSize * 8
         var hashCount = Int((Double(bitFieldSize) / Double(elementCount)) * log(2.0))
@@ -34,5 +34,22 @@ extension BloomFilter {
         // where m is the size of the bitfield and n is the number of elements
         let singleElementFalsePositive = 1 - 1 / Double(byteSize * 8)
         return 1 - pow(singleElementFalsePositive, Double(elementCount))
+    }
+
+    static func valueforFlagIndex(flagIndex: Int) -> Int {
+        let value = pow(Double(2), Double(flagIndex))
+        return Int(value)
+    }
+
+    /**
+     Compute a fast, non-cryptographic hash of a given seed
+     - parameter data: Data to be hashed
+     - parameter seed: Seed for this hash
+     - returns:  Computed hash, as UInt64
+     */
+    static func computeHash(data: Data, seed: UInt64) -> UInt64 {
+        var hash = XXHash(seed: seed)
+        hash.update(buffer: Array(data))
+        return hash.digest()
     }
 }

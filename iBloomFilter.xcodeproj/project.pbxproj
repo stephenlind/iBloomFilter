@@ -13,6 +13,7 @@
 		9BD06C3A21CEEBE700DCD617 /* BloomFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C3921CEEBE700DCD617 /* BloomFilter.swift */; };
 		9BD06C3C21CEEF3200DCD617 /* BloomFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C3B21CEEF3200DCD617 /* BloomFilterTests.swift */; };
 		9BD06C3E21D44E8B00DCD617 /* BloomFilter+Tools.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C3D21D44E8B00DCD617 /* BloomFilter+Tools.swift */; };
+		9BD06C4021D47EAA00DCD617 /* xxHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BD06C3F21D47EAA00DCD617 /* xxHash.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		9BD06C3921CEEBE700DCD617 /* BloomFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilter.swift; sourceTree = "<group>"; };
 		9BD06C3B21CEEF3200DCD617 /* BloomFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilterTests.swift; sourceTree = "<group>"; };
 		9BD06C3D21D44E8B00DCD617 /* BloomFilter+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BloomFilter+Tools.swift"; sourceTree = "<group>"; };
+		9BD06C3F21D47EAA00DCD617 /* xxHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xxHash.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				9BD06C3721CEE0A100DCD617 /* BloomFilterProtocol.swift */,
 				9BD06C3921CEEBE700DCD617 /* BloomFilter.swift */,
 				9BD06C3D21D44E8B00DCD617 /* BloomFilter+Tools.swift */,
+				9BD06C3F21D47EAA00DCD617 /* xxHash.swift */,
 				9BD06C2121CEDFF600DCD617 /* Info.plist */,
 			);
 			path = iBloomFilter;
@@ -207,6 +210,7 @@
 				9BD06C3E21D44E8B00DCD617 /* BloomFilter+Tools.swift in Sources */,
 				9BD06C3821CEE0A100DCD617 /* BloomFilterProtocol.swift in Sources */,
 				9BD06C3A21CEEBE700DCD617 /* BloomFilter.swift in Sources */,
+				9BD06C4021D47EAA00DCD617 /* xxHash.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
