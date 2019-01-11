@@ -9,11 +9,9 @@ public class BloomFilter : BloomFilterProtocol {
      - parameter size: fixed size of the filter, in bytes.
      */
     public required init(size: Int, capacity: Int) {
-        let bytes = [UInt8](repeating: 0, count: size)
-        let data = Data(bytes)
+        self.filterData = [UInt8](repeating: 0, count: size)
         self.hashCount = BloomFilter.computeHashCount(byteSize: size,
                                                       elementCount: capacity)
-        self.filterData = data
     }
 
     public func check(data: Data) -> Bool {
@@ -67,13 +65,12 @@ public class BloomFilter : BloomFilterProtocol {
 
     // MARK: Private
 
-    var filterData: Data
+    var filterData: [UInt8]
 
     fileprivate func checkBitIndex(bitIndex: UInt64, set: Bool) -> Bool {
         // convert bits to bytes
         let byteIndex = self.byteIndexWithBit(bitIndex: Int(bitIndex))
-        let range = Range(byteIndex...byteIndex)
-        let originalByte = Array(self.filterData.subdata(in: range)).first!
+        let originalByte = self.filterData[byteIndex]
 
         let intraByteIndex = Int(bitIndex % 8)
         let flagValue = BloomFilter.valueforFlagIndex(flagIndex: intraByteIndex)
@@ -83,8 +80,7 @@ public class BloomFilter : BloomFilterProtocol {
 
         if set && !hasFlag  {
             let newByte = originalByte + UInt8(flagValue)
-            let newData = Data([newByte])
-            self.filterData.replaceSubrange(range, with: newData)
+            self.filterData.replaceSubrange(byteIndex...byteIndex, with: [newByte])
         }
 
         return hasFlag

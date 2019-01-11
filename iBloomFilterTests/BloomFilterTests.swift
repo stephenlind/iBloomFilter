@@ -12,11 +12,9 @@ class BloomFilterTests: XCTestCase {
         let filter = BloomFilter(size: size, capacity: 100)
 
         let data = filter.filterData
-        for i in 0..<size - 1 {
-            let range = Range(i..<i+1)
-            let byte = data.subdata(in: range)
-            let byteInt = Array(byte).first
-            XCTAssertEqual(byteInt, 0)
+        for i in 0..<size {
+            let byte = data[i]
+            XCTAssertEqual(byte, 0)
         }
     }
 
@@ -24,8 +22,8 @@ class BloomFilterTests: XCTestCase {
      Verify that a large number of positive matches all are labeled as 'maybe'
      */
     func testPositiveMatches() {
-        let size = 10000
-        let count = 1000
+        let size = 1024
+        let count = 10000
         let filter = BloomFilter(size: size, capacity: count)
         var missed = 0
         for _ in 0..<count {
@@ -59,12 +57,10 @@ class BloomFilterTests: XCTestCase {
             }
         }
         XCTAssertTrue(falsePositives > 0)
-        let falsePositiveRate = BloomFilter.computeFalsePositiveRate(byteSize: size,
+        let falsePositiveRate = Double(falsePositives) / Double(count)
+        let expFalsePositiveRate = BloomFilter.computeFalsePositiveRate(byteSize: size,
                                                                      elementCount: count)
 
-        // because the input data is cryptographically random, the number of
-        // false positives seems to be much lower than the expected rate. ??
-        let expFalsePositives = falsePositiveRate * Double(count)
-        XCTAssertTrue(Double(falsePositives) < expFalsePositives)
+        XCTAssertTrue(falsePositiveRate < expFalsePositiveRate)
     }
 }
