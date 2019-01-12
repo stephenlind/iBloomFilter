@@ -10,8 +10,7 @@ class BloomFilterTests: XCTestCase {
     func testBloomFilterInitialization() {
         let size = 1024
         let filter = BloomFilter(size: size, capacity: 100)
-
-        let data = filter.filterData
+        let data = Array(filter.filterData)
         for i in 0..<size {
             let byte = data[i]
             XCTAssertEqual(byte, 0)
@@ -62,5 +61,35 @@ class BloomFilterTests: XCTestCase {
                                                                      elementCount: count)
 
         XCTAssertTrue(falsePositiveRate < expFalsePositiveRate)
+    }
+
+    /**
+     Verify that copying the bloom filter's data works properly
+     */
+    func testCopiedBloomFilter() {
+        let size = 1024 * 10
+        let count = 10000
+        let filter = BloomFilter(size: size, capacity: count)
+        var matches = [Data]()
+
+        for _ in 0..<count {
+            let match = UUID().uuidString.data(using: .utf8)!
+            filter.add(data: match)
+            matches.append(match)
+        }
+
+        let copiedFilter = BloomFilter(data: filter.filterData,
+                                       capacity: count,
+                                       elementCount: filter.elementCount)
+        XCTAssertEqual(copiedFilter.elementCount, filter.elementCount)
+        XCTAssertEqual(copiedFilter.filterData.count, filter.filterData.count)
+        XCTAssertEqual(copiedFilter.hashCount, filter.hashCount)
+        for match in matches {
+            let possibleMatch = copiedFilter.check(data: match)
+            XCTAssertTrue(possibleMatch)
+            if !possibleMatch {
+                break
+            }
+        }
     }
 }

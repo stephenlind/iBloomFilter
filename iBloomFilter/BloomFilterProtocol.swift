@@ -33,6 +33,9 @@ protocol BloomFilterProtocol {
      */
     var elementCount: Int { get }
 
+    /**
+     The number of hash functions used in this filter
+     */
     var hashCount: Int { get }
 
 }

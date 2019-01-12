@@ -7,11 +7,24 @@ public class BloomFilter : BloomFilterProtocol {
     /**
      Create a new empty filter with a given size (in bytes)
      - parameter size: fixed size of the filter, in bytes.
+     - parameter capacity: capacity of this filter, used to calculate hash count
      */
     public required init(size: Int, capacity: Int) {
-        self.filterData = [UInt8](repeating: 0, count: size)
+        self.bitfield = [UInt8](repeating: 0, count: size)
         self.hashCount = BloomFilter.computeHashCount(byteSize: size,
                                                       elementCount: capacity)
+    }
+
+    /**
+     Re-create an existing filter from data and element count
+     - parameter size: fixed size of the filter, in bytes.
+     - parameter capacity: capacity of this filter, used to calculate hash count
+     - parameter elementCount: actual number of elements in this filter
+     */
+    public convenience init(data: Data, capacity: Int, elementCount: Int) {
+        self.init(size: data.count, capacity: elementCount)
+        self.bitfield = Array(data)
+        self.elementCount = elementCount
     }
 
     public func check(data: Data) -> Bool {
@@ -63,9 +76,16 @@ public class BloomFilter : BloomFilterProtocol {
         return hashes
     }
 
+    public var filterData: Data {
+        get {
+            return Data(self.bitfield)
+        }
+
+    }
+
     // MARK: Private
 
-    var filterData: [UInt8]
+    private var bitfield: [UInt8]
 
     fileprivate func checkBitIndex(bitIndex: UInt64, set: Bool) -> Bool {
         // convert bits to bytes
@@ -80,7 +100,7 @@ public class BloomFilter : BloomFilterProtocol {
 
         if set && !hasFlag  {
             let newByte = originalByte + UInt8(flagValue)
-            self.filterData.replaceSubrange(byteIndex...byteIndex, with: [newByte])
+            self.bitfield.replaceSubrange(byteIndex...byteIndex, with: [newByte])
         }
 
         return hasFlag
