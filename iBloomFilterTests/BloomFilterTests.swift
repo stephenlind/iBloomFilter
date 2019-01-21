@@ -10,7 +10,7 @@ class BloomFilterTests: XCTestCase {
     func testBloomFilterInitialization() {
         let size = 1024
         let filter = BloomFilter(size: size, capacity: 100)
-        let data = Array(filter.filterData)
+        let data = Array(filter.data)
         for i in 0..<size {
             let byte = data[i]
             XCTAssertEqual(byte, 0)
@@ -78,11 +78,11 @@ class BloomFilterTests: XCTestCase {
             matches.append(match)
         }
 
-        let copiedFilter = BloomFilter(data: filter.filterData,
+        let copiedFilter = BloomFilter(data: filter.data,
                                        capacity: count,
                                        elementCount: filter.elementCount)
         XCTAssertEqual(copiedFilter.elementCount, filter.elementCount)
-        XCTAssertEqual(copiedFilter.filterData.count, filter.filterData.count)
+        XCTAssertEqual(copiedFilter.data.count, filter.data.count)
         XCTAssertEqual(copiedFilter.hashCount, filter.hashCount)
         for match in matches {
             let possibleMatch = copiedFilter.check(data: match)

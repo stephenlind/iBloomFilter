@@ -13,6 +13,17 @@ protocol BloomFilterProtocol {
         (this is used for optimizing the number of hash functions)
      */
     init(size: Int, capacity: Int)
+    
+    /**
+     Re-create an existing bloom filter with populated values
+     - parameter data: bitfield as binary data
+     - parameter capacity: The capacity this bloom filter was created with (determines hash count)
+     - parameter elementCount: the number of elements that have been added so far
+     
+     Given a previously created bloom filter, this method allows you to re-create
+     it given parameters that could be saved or transmitted as serialized data.
+     */
+    init(data: Data, capacity: Int, elementCount: Int)
 
     /**
      Check the filter for a piece of data to see if it is a possible match.
@@ -35,7 +46,14 @@ protocol BloomFilterProtocol {
 
     /**
      The number of hash functions used in this filter
+     (for serializing and copying)
      */
     var hashCount: Int { get }
+    
+    /**
+     Bitfield as binary data
+     (for serializing and copying)
+     */
+    var data: Data { get }
 
 }

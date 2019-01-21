@@ -1,7 +1,6 @@
 import Foundation
 
 public class BloomFilter : BloomFilterProtocol {
-
     // MARK: Public
 
     /**
@@ -21,7 +20,7 @@ public class BloomFilter : BloomFilterProtocol {
      - parameter capacity: capacity of this filter, used to calculate hash count
      - parameter elementCount: actual number of elements in this filter
      */
-    public convenience init(data: Data, capacity: Int, elementCount: Int) {
+    required public convenience init(data: Data, capacity: Int, elementCount: Int) {
         self.init(size: data.count, capacity: elementCount)
         self.bitfield = Array(data)
         self.elementCount = elementCount
@@ -76,7 +75,7 @@ public class BloomFilter : BloomFilterProtocol {
         return hashes
     }
 
-    public var filterData: Data {
+    public var data: Data {
         get {
             return Data(self.bitfield)
         }
@@ -90,7 +89,7 @@ public class BloomFilter : BloomFilterProtocol {
     fileprivate func checkBitIndex(bitIndex: UInt64, set: Bool) -> Bool {
         // convert bits to bytes
         let byteIndex = self.byteIndexWithBit(bitIndex: Int(bitIndex))
-        let originalByte = self.filterData[byteIndex]
+        let originalByte = self.bitfield[byteIndex]
 
         let intraByteIndex = Int(bitIndex % 8)
         let flagValue = BloomFilter.valueforFlagIndex(flagIndex: intraByteIndex)
@@ -107,7 +106,7 @@ public class BloomFilter : BloomFilterProtocol {
     }
 
     fileprivate func maxByteIndex() -> UInt64 {
-        return UInt64(self.filterData.count)
+        return UInt64(self.bitfield.count)
     }
 
     fileprivate func maxBitIndex() -> UInt64 {
