@@ -28,12 +28,17 @@ extension BloomFilter {
      - parameter elementCount: Number of elements in the filter
      - returns:  Expected false-positive rate (between 0.0 and 1.0)
      */
-    static func computeFalsePositiveRate(byteSize: Int, elementCount: Int) -> Double {
+    static func computeFalsePositiveRate(byteSize: Int, elementCount: Int, hashCount: Int) -> Double {
         // Assuming optimal hash function count,
-        // the false positive rate should be 1 - (1 - 1 / m)^n,
+        // the false positive rate should be (1 - e^(-kn/m))^k,
         // where m is the size of the bitfield and n is the number of elements
-        let singleElementFalsePositive = 1 - 1 / Double(byteSize * 8)
-        return 1 - pow(singleElementFalsePositive, Double(elementCount))
+        
+        let e = Darwin.M_E
+        let k = Double(hashCount)
+        let n = Double(elementCount)
+        let m = Double(8 * byteSize)
+        let minusKNOverM = -1.0 * (k * n) / m
+        return pow((1.0 - pow(e, minusKNOverM)), k)
     }
 
     static func valueforFlagIndex(flagIndex: Int) -> Int {

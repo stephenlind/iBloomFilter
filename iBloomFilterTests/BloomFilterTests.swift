@@ -58,7 +58,8 @@ class BloomFilterTests: XCTestCase {
         XCTAssertTrue(falsePositives > 0)
         let falsePositiveRate = Double(falsePositives) / Double(count)
         let expFalsePositiveRate = BloomFilter.computeFalsePositiveRate(byteSize: size,
-                                                                     elementCount: count)
+                                                                     elementCount: filter.elementCount,
+                                                                     hashCount: filter.hashCount)
 
         XCTAssertTrue(falsePositiveRate < expFalsePositiveRate)
     }

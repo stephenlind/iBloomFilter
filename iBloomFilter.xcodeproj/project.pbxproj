@@ -37,6 +37,7 @@
 		9BD06C3B21CEEF3200DCD617 /* BloomFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BloomFilterTests.swift; sourceTree = "<group>"; };
 		9BD06C3D21D44E8B00DCD617 /* BloomFilter+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BloomFilter+Tools.swift"; sourceTree = "<group>"; };
 		9BD06C3F21D47EAA00DCD617 /* xxHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xxHash.swift; sourceTree = "<group>"; };
+		AA397A5821F5788F006EFB50 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +62,7 @@
 		9BD06C1321CEDFF500DCD617 = {
 			isa = PBXGroup;
 			children = (
+				AA397A5821F5788F006EFB50 /* README.md */,
 				9BD06C1F21CEDFF600DCD617 /* iBloomFilter */,
 				9BD06C2A21CEDFF600DCD617 /* iBloomFilterTests */,
 				9BD06C1E21CEDFF600DCD617 /* Products */,
