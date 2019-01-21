@@ -1,6 +1,6 @@
 # iBloomFilter
 
-Simple Bloom Filter implementation for macOS and iOS.
+Simple Bloom Filter implementation for macOS and iOS, written in Swift.
 
 ## Overview
 
@@ -8,9 +8,8 @@ A Bloom Filter is a space compressed data structure for key lookups.
 
 It is essentially a bitfield representing n objects hashed k times, where each object represents a set of indexes that will be set to 1 within the bitfield.
 
-The number of hashes is determined by the function 
-
-For a full explanation, see: https://en.wikipedia.org/wiki/Bloom_filter
+For a full explanation on Bloom Filters, as well as the functions used for optimal hash counts and expected false-posive rates, see:
+https://en.wikipedia.org/wiki/Bloom_filter
 
 ## Usage
 
