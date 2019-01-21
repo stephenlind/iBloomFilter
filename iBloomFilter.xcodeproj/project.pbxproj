@@ -38,6 +38,7 @@
 		9BD06C3D21D44E8B00DCD617 /* BloomFilter+Tools.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BloomFilter+Tools.swift"; sourceTree = "<group>"; };
 		9BD06C3F21D47EAA00DCD617 /* xxHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xxHash.swift; sourceTree = "<group>"; };
 		AA397A5821F5788F006EFB50 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		AA397A5A21F58075006EFB50 /* iBloomFilter.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = iBloomFilter.podspec; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +63,7 @@
 		9BD06C1321CEDFF500DCD617 = {
 			isa = PBXGroup;
 			children = (
+				AA397A5A21F58075006EFB50 /* iBloomFilter.podspec */,
 				AA397A5821F5788F006EFB50 /* README.md */,
 				9BD06C1F21CEDFF600DCD617 /* iBloomFilter */,
 				9BD06C2A21CEDFF600DCD617 /* iBloomFilterTests */,
@@ -369,6 +371,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = iBloomFilter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -396,6 +399,7 @@
 				FRAMEWORK_VERSION = A;
 				INFOPLIST_FILE = iBloomFilter/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -415,6 +419,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = iBloomFilterTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -433,6 +438,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = iBloomFilterTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
