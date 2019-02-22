@@ -91,11 +91,9 @@ public class BloomFilter : BloomFilterProtocol {
         let byteIndex = self.byteIndexWithBit(bitIndex: Int(bitIndex))
         let originalByte = self.bitfield[byteIndex]
 
-        let intraByteIndex = Int(bitIndex % 8)
+        let intraByteIndex = UInt8(bitIndex % 8)
         let flagValue = BloomFilter.valueforFlagIndex(flagIndex: intraByteIndex)
-        let stripFlagValue = BloomFilter.valueforFlagIndex(flagIndex: intraByteIndex + 1)
-        let byteStripHigherFlags = Int(originalByte) % stripFlagValue
-        let hasFlag: Bool = (byteStripHigherFlags / flagValue) > 0
+        let hasFlag: Bool = (originalByte & flagValue) == flagValue
 
         if set && !hasFlag  {
             let newByte = originalByte + UInt8(flagValue)

@@ -31,6 +31,3 @@ http://cyan4973.github.io/xxHash/
 Swift implementation here:
 https://github.com/haveahennessy/swift-xxhash
 
-
-
-

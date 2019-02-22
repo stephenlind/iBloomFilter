@@ -41,9 +41,9 @@ extension BloomFilter {
         return pow((1.0 - pow(e, minusKNOverM)), k)
     }
 
-    static func valueforFlagIndex(flagIndex: Int) -> Int {
+    static func valueforFlagIndex(flagIndex: UInt8) -> UInt8 {
         let value = pow(Double(2), Double(flagIndex))
-        return Int(value)
+        return UInt8(value)
     }
 
     /**
